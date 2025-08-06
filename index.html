@@ -537,6 +537,30 @@
       });
     }
   });
+  // --- LÓGICA PARA DEPARTAMENTOS Y MUNICIPIOS ---
+    // (Asegúrate de tener el archivo departamentos_municipios.js vinculado en el HTML)
+    document.addEventListener('DOMContentLoaded', function() {
+        const departamentoSelect = document.getElementById('departamento');
+        const municipioSelect = document.getElementById('municipio');
+
+        if (departamentoSelect && municipioSelect && typeof municipiosPorDepartamento !== 'undefined') {
+            // Manejar cambio de departamento
+            departamentoSelect.addEventListener('change', function() {
+                const departamento = this.value;
+                const municipios = municipiosPorDepartamento[departamento] || [];
+
+                municipioSelect.innerHTML = '<option value="">Seleccione un municipio</option>';
+
+                municipios.forEach(function(municipio) {
+                    const option = document.createElement('option');
+                    option.value = municipio;
+                    option.textContent = municipio;
+                    municipioSelect.appendChild(option);
+                });
+            });
+        }
+    });
+</script>
     
     document.addEventListener('DOMContentLoaded', function() {
       showPage(1); // Muestra la primera página al cargar
