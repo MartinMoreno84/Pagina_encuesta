@@ -99,7 +99,6 @@
     <h1>Encuesta de Selección de Donantes</h1>
     <form id="donantesForm">
   <div id="page1" class="page">
-  <div class="navigation"><button type="button" onclick="nextPage(2)">Siguiente</button></div>
       <!-- Todo el contenido de tu encuesta aquí -->
        <label>1. ¿Leyó y entendió la información que se le dio antes de la donación?</label>
       <button type="button" class="audio-btn" onclick="leerTexto('¿Leyó y entendió la información que se le dio antes de la donación?')">🔊</button>
@@ -112,7 +111,6 @@
 
     </div>
   <div id="page2" class="page">
-  <div class="navigation"><button type="button" onclick="prevPage(1)">Anterior</button><button type="button" onclick="nextPage(3)">Siguiente</button></div>
   <h2>Datos Personales</h2>
     <div class="question">
       <label>2. Primer Nombre</label>
@@ -370,14 +368,15 @@
   function prevPage(pageNumber) { showPage(pageNumber); }
   document.addEventListener('DOMContentLoaded', function() {
     showPage(1);
-    document.querySelectorAll('.toggle-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const group = this.parentElement;
-        group.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active-si', 'active-no'));
-        const val = this.getAttribute('data-value');
-        if (val === 'si') { this.classList.add('active-si'); }
-        else { this.classList.add('active-no'); }
-        group.querySelector('input[type="hidden"]').value = val;
+    document.querySelectorAll('.toggle-group').forEach(group => {
+      group.querySelectorAll('.toggle-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          group.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active-si', 'active-no'));
+          const val = this.getAttribute('data-value');
+          if (val === 'si') { this.classList.add('active-si'); }
+          else { this.classList.add('active-no'); }
+          group.querySelector('input[type="hidden"]').value = val;
+        });
       });
     });
   });
