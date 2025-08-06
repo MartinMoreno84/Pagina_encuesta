@@ -492,21 +492,21 @@
     }
 
     // Lógica para mostrar el botón de siguiente en la primera página
-    document.addEventListener('DOMContentLoaded', function() {
-      const radioButtons = document.querySelectorAll('input[name="entendio_info"]');
-      const nextPageBtn = document.getElementById('next-page-btn-1');
+  document.addEventListener('DOMContentLoaded', function() {
+    const radioButtons = document.querySelectorAll('input[name="entendio_info"]');
+    const nextPageBtn = document.getElementById('next-page-btn-1');
 
-      if (radioButtons.length > 0 && nextPageBtn) {
-        radioButtons.forEach(radio => {
-          radio.addEventListener('change', function() {
-            if (this.checked) {
-              // Muestra el botón de Siguiente cuando una opción es seleccionada
-              nextPageBtn.style.display = 'block';
-            }
-          });
+    if (radioButtons.length > 0 && nextPageBtn) {
+      radioButtons.forEach(radio => {
+        radio.addEventListener('change', function() {
+          if (this.checked) {
+            // Muestra el botón de Siguiente cuando una opción es seleccionada
+            nextPageBtn.style.display = 'block';
+          }
         });
-      }
-    });
+      });
+    }
+  });
     
     document.addEventListener('DOMContentLoaded', function() {
       showPage(1); // Muestra la primera página al cargar
