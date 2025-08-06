@@ -441,6 +441,9 @@
       const videoMessage = document.getElementById('video-message');
       
       if(video && understoodBtn && videoMessage) {
+        setTimeout(() => {
+          video.play();
+        }, 2000);
         video.addEventListener('ended', function() {
           videoMessage.textContent = "¿Entendió el mensaje del video?";
           understoodBtn.style.display = 'block';
