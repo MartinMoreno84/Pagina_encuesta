@@ -247,12 +247,25 @@
             <input type="date" name="fecha_nacimiento" required>
           </div>
           <div class="question">
-            <label>7. Documento de identidad</label>
+            <label>7. Tipo de Documento</label>
+            <button type="button" class="audio-btn" onclick="leerTexto('Estado civil')">🔊</button>
+            <select name="estado_civil">
+              <option value="">Seleccione</option>
+              <option value="Cedula de Ciudadania">CC</option>
+              <option value="Cedula de Extrangería">CE</option>
+              <option value="Pasaporte">Pasaporte</option>
+              <option value="PPT">PPT</option>
+              <option value="PPE">PPE</option>
+              <option value="NIUP">NIUP</option>
+            </select>
+          </div>
+          <div class="question">
+            <label>8. Documento de identidad</label>
             <button type="button" class="audio-btn" onclick="leerTexto('Documento de identidad')">🔊</button>
             <input type="text" name="documento" required>
           </div>
           <div class="question">
-            <label>8. Estado Civil</label>
+            <label>9. Estado Civil</label>
             <button type="button" class="audio-btn" onclick="leerTexto('Estado civil')">🔊</button>
             <select name="estado_civil">
               <option value="">Seleccione</option>
@@ -263,32 +276,37 @@
             </select>
           </div>
           <div class="question">
-            <label>9. Grupo Sanguíneo / RH</label>
+            <label>10. Grupo Sanguíneo / RH</label>
             <button type="button" class="audio-btn" onclick="leerTexto('Grupo sanguíneo y factor RH')">🔊</button>
             <input type="text" name="grupo_rh">
           </div>
           <div class="question">
-            <label>10. Lugar de Donación (ciudad o municipio)</label>
+            <label>11. Lugar de Donación (ciudad o municipio)</label>
             <button type="button" class="audio-btn" onclick="leerTexto('Lugar de donación, ciudad o municipio')">🔊</button>
             <input type="text" name="lugar_donacion">
           </div>
           <div class="question">
-            <label>11. Barrio</label>
+            <label>12. Barrio</label>
             <button type="button" class="audio-btn" onclick="leerTexto('Barrio')">🔊</button>
             <input type="text" name="barrio">
           </div>
           <div class="question">
-            <label>12. Localidad</label>
+            <label>13. Direccion de domicilio</label>
+            <button type="button" class="audio-btn" onclick="leerTexto('Direccion de domicilio')">🔊</button>
+            <input type="text" name="Direccion de domicilio">
+          </div>
+          <div class="question">
+            <label>14. Localidad</label>
             <button type="button" class="audio-btn" onclick="leerTexto('Localidad')">🔊</button>
             <input type="text" name="localidad">
           </div>
           <div class="question">
-            <label>13. Teléfono Principal</label>
+            <label>15. Teléfono Principal</label>
             <button type="button" class="audio-btn" onclick="leerTexto('Teléfono principal')">🔊</button>
             <input type="tel" name="telefono">
           </div>
           <div class="question">
-            <label>14. Celular</label>
+            <label>16. Celular</label>
             <button type="button" class="audio-btn" onclick="leerTexto('Número de celular')">🔊</button>
             <input type="tel" name="celular">
           </div>
