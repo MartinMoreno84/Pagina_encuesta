@@ -492,16 +492,28 @@
     }
 
     // Lógica para mostrar el botón de siguiente en la primera página
-  document.addEventListener('DOMContentLoaded', function() {
+   document.addEventListener('DOMContentLoaded', function() {
     const radioButtons = document.querySelectorAll('input[name="entendio_info"]');
     const nextPageBtn = document.getElementById('next-page-btn-1');
+    const videoScreen = document.getElementById('video-screen');
+    const mainContent = document.getElementById('main-content');
+    const video = document.getElementById('intro-video');
 
-    if (radioButtons.length > 0 && nextPageBtn) {
+    if (radioButtons.length > 0 && nextPageBtn && videoScreen && mainContent && video) {
       radioButtons.forEach(radio => {
         radio.addEventListener('change', function() {
-          if (this.checked) {
-            // Muestra el botón de Siguiente cuando una opción es seleccionada
+          if (this.value === 'si') {
+            // Si elige 'Sí', muestra el botón para continuar
             nextPageBtn.style.display = 'block';
+          } else if (this.value === 'no') {
+            // Si elige 'No', oculta la encuesta y vuelve a mostrar el video
+            mainContent.style.display = 'none';
+            videoScreen.style.display = 'flex';
+            nextPageBtn.style.display = 'none'; // Oculta el botón Siguiente nuevamente
+          
+            // Reinicia y reproduce el video desde el principio
+            video.load();
+            video.play();
           }
         });
       });
