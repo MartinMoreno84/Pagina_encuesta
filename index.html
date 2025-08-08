@@ -106,8 +106,24 @@
       max-height: 70vh;
     }
     
+    /* Estilos para el logo fijo y centrado */
+    #logo-fixed-header {
+        position: fixed; /* Lo fija en la pantalla */
+        top: 0;
+        left: 0;
+        width: 100%;
+        text-align: center; /* Centra el logo horizontalmente */
+        background-color: #ACD7CA; /* Color de fondo del encabezado */
+        z-index: 1001; /* Asegura que esté por encima de otros elementos */
+        padding: 10px 0; /* Espaciado interno */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .logo {
+        height: 80px; /* Mantiene el mismo tamaño del logo */
+    }
     #main-content {
-      display: none;
+        display: none;
+        padding-top: 100px; /* Agrega un padding superior para que el contenido no se oculte detrás del logo fijo */
     }
     
     /* Estilos para los botones de Sí/No (SOLUCIÓN) */
@@ -176,18 +192,12 @@
 
     .page { display: none; }
     .page.active { display: block; }
-  
-    .logo {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        height: 80px;
-    }
-
   </style>
 </head>
 <body>
-  <img src="logo.png" alt="Logo Banco de Sangre" class="logo">
+  <div id="logo-fixed-header">
+    <img src="logo.png" alt="Logo Banco de Sangre" class="logo">
+  </div>
 
   <div id="video-screen">
     <div id="video-message">
