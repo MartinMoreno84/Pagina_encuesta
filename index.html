@@ -7,8 +7,9 @@
   <style>
     /* Estilos generales */
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f7f7f7;
+      background-color: #ACD7CA;
+      color: #316857;
+      font-family: "Trebuchet MS", Arial, sans-serif;
       margin: 0;
       padding: 0;
     }
@@ -21,13 +22,13 @@
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
     h1 {
-      color: #333;
+      color: #1A4A5D;
       text-align: center;
       border-bottom: 2px solid #eee;
       padding-bottom: 10px;
     }
     h2 {
-      color: #555;
+      color: #1A4A5D;
       border-bottom: 1px solid #ddd;
       padding-bottom: 5px;
       margin-top: 25px;
@@ -175,9 +176,18 @@
 
     .page { display: none; }
     .page.active { display: block; }
-  </style>
+  
+    .logo {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        height: 80px;
+    }
+
+</style>
 </head>
 <body>
+    <img src="logo.png" alt="Logo Banco de Sangre" class="logo">
 
   <div id="video-screen">
     <div id="video-message">
@@ -185,7 +195,7 @@
     </div>
     
     <div id="video-container">
-      <video id="intro-video" controls>
+      <video id="intro-video" controls muted>
         <source src="video_donacion.mp4" type="video/mp4">
         Tu navegador no soporta el elemento de video.
       </video>
@@ -249,7 +259,7 @@
           <div class="question">
             <label>7. Tipo de Documento</label>
             <button type="button" class="audio-btn" onclick="leerTexto('Estado civil')">🔊</button>
-            <select name="estado_civil">
+            <select name="tipo_documento">
               <option value="">Seleccione</option>
               <option value="Cedula de Ciudadania">CC</option>
               <option value="Cedula de Extrangería">CE</option>
@@ -293,7 +303,7 @@
           <div class="question">
             <label>13. Direccion de domicilio</label>
             <button type="button" class="audio-btn" onclick="leerTexto('Direccion de domicilio')">🔊</button>
-            <input type="text" name="Direccion de domicilio">
+            <input type="text" name="direccion_domicilio">
           </div>
           <div class="question">
             <label>14. Localidad</label>
@@ -437,6 +447,7 @@
     </div>
   </div>
 
+  <script src="departamentos_municipios.js"></script>
   <script>
     // Función para continuar a la encuesta
     function proceedToSurvey() {
@@ -537,6 +548,7 @@
       });
     }
   });
+
   // --- LÓGICA PARA DEPARTAMENTOS Y MUNICIPIOS ---
     // (Asegúrate de tener el archivo departamentos_municipios.js vinculado en el HTML)
     document.addEventListener('DOMContentLoaded', function() {
@@ -561,12 +573,5 @@
         }
     });
 </script>
-    
-    document.addEventListener('DOMContentLoaded', function() {
-      showPage(1); // Muestra la primera página al cargar
-    });
-  </script>
-
-  <script src="departamentos_municipios.js"></script>
 </body>
 </html>
