@@ -184,10 +184,10 @@
         height: 80px;
     }
 
-</style>
+  </style>
 </head>
 <body>
-    <img src="logo.png" alt="Logo Banco de Sangre" class="logo">
+  <img src="logo.png" alt="Logo Banco de Sangre" class="logo">
 
   <div id="video-screen">
     <div id="video-message">
@@ -258,7 +258,7 @@
           </div>
           <div class="question">
             <label>7. Tipo de Documento</label>
-            <button type="button" class="audio-btn" onclick="leerTexto('Estado civil')">🔊</button>
+            <button type="button" class="audio-btn" onclick="leerTexto('Tipo de Documento')">🔊</button>
             <select name="tipo_documento">
               <option value="">Seleccione</option>
               <option value="Cedula de Ciudadania">CC</option>
@@ -449,12 +449,14 @@
 
   <script src="departamentos_municipios.js"></script>
   <script>
+    // --- LÓGICA GENERAL DE LA ENCUESTA ---
+
     // Función para continuar a la encuesta
     function proceedToSurvey() {
       const videoScreen = document.getElementById('video-screen');
       const mainContent = document.getElementById('main-content');
       
-      if(videoScreen && mainContent) {
+      if (videoScreen && mainContent) {
         videoScreen.style.display = 'none';
         mainContent.style.display = 'block';
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -462,24 +464,6 @@
         console.error("Error: No se encontraron los elementos necesarios");
       }
     }
-
-    // Control del video
-    document.addEventListener('DOMContentLoaded', function() {
-      const video = document.getElementById('intro-video');
-      const understoodBtn = document.getElementById('video-understood');
-      const videoMessage = document.getElementById('video-message');
-      
-      if(video && understoodBtn && videoMessage) {
-        setTimeout(() => {
-          video.play();
-        }, 2000);
-        video.addEventListener('ended', function() {
-          videoMessage.textContent = "¿Entendió el mensaje del video?";
-          understoodBtn.style.display = 'block';
-          understoodBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        });
-      }
-    });
 
     // Función para leer texto
     function leerTexto(texto) {
@@ -520,43 +504,53 @@
         showPage(pageNumber);
     }
 
-    // Lógica para mostrar el botón de siguiente en la primera página
-   document.addEventListener('DOMContentLoaded', function() {
-    const radioButtons = document.querySelectorAll('input[name="entendio_info"]');
-    const nextPageBtn = document.getElementById('next-page-btn-1');
-    const videoScreen = document.getElementById('video-screen');
-    const mainContent = document.getElementById('main-content');
-    const video = document.getElementById('intro-video');
-
-    if (radioButtons.length > 0 && nextPageBtn && videoScreen && mainContent && video) {
-      radioButtons.forEach(radio => {
-        radio.addEventListener('change', function() {
-          if (this.value === 'si') {
-            // Si elige 'Sí', muestra el botón para continuar
-            nextPageBtn.style.display = 'block';
-          } else if (this.value === 'no') {
-            // Si elige 'No', oculta la encuesta y vuelve a mostrar el video
-            mainContent.style.display = 'none';
-            videoScreen.style.display = 'flex';
-            nextPageBtn.style.display = 'none'; // Oculta el botón Siguiente nuevamente
-          
-            // Reinicia y reproduce el video desde el principio
-            video.load();
-            video.play();
-          }
-        });
-      });
-    }
-  });
-
-  // --- LÓGICA PARA DEPARTAMENTOS Y MUNICIPIOS ---
-    // (Asegúrate de tener el archivo departamentos_municipios.js vinculado en el HTML)
+    // --- LÓGICA DEL VIDEO Y FUNCIONALIDAD DE LA PÁGINA ---
     document.addEventListener('DOMContentLoaded', function() {
+        const video = document.getElementById('intro-video');
+        const understoodBtn = document.getElementById('video-understood');
+        const videoMessage = document.getElementById('video-message');
+        const mainContent = document.getElementById('main-content');
+        const videoScreen = document.getElementById('video-screen');
+
+        // Lógica de reproducción del video
+        if (video && understoodBtn && videoMessage) {
+            setTimeout(() => {
+                video.play();
+            }, 2000);
+
+            video.addEventListener('ended', function() {
+                videoMessage.textContent = "¿Entendió el mensaje del video?";
+                understoodBtn.style.display = 'block';
+                understoodBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
+        }
+
+        // Lógica de interacción para la primera pregunta
+        const radioButtons = document.querySelectorAll('input[name="entendio_info"]');
+        const nextPageBtn = document.getElementById('next-page-btn-1');
+
+        if (radioButtons.length > 0 && nextPageBtn && videoScreen && mainContent && video) {
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.value === 'si') {
+                        nextPageBtn.style.display = 'block';
+                    } else if (this.value === 'no') {
+                        mainContent.style.display = 'none';
+                        videoScreen.style.display = 'flex';
+                        nextPageBtn.style.display = 'none';
+                        
+                        video.load();
+                        video.play();
+                    }
+                });
+            });
+        }
+
+        // --- LÓGICA PARA DEPARTAMENTOS Y MUNICIPIOS ---
         const departamentoSelect = document.getElementById('departamento');
         const municipioSelect = document.getElementById('municipio');
 
         if (departamentoSelect && municipioSelect && typeof municipiosPorDepartamento !== 'undefined') {
-            // Manejar cambio de departamento
             departamentoSelect.addEventListener('change', function() {
                 const departamento = this.value;
                 const municipios = municipiosPorDepartamento[departamento] || [];
@@ -571,7 +565,10 @@
                 });
             });
         }
+
+        // Muestra la primera página al cargar
+        showPage(1);
     });
-</script>
+  </script>
 </body>
 </html>
