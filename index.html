@@ -33,6 +33,11 @@
       padding-bottom: 5px;
       margin-top: 25px;
     }
+    h3 {
+      color: #1A4A5D;
+      margin-top: 20px;
+      margin-bottom: 15px;
+    }
     .question {
       margin-bottom: 15px;
     }
@@ -176,6 +181,8 @@
       border: none;
       border-radius: 4px;
       cursor: pointer;
+      font-family: "Trebuchet MS", Arial, sans-serif;
+      font-size: 1em;
     }
     .navigation button:hover {
       background-color: #2980b9;
@@ -187,26 +194,28 @@
       cursor: pointer;
       margin-left: 5px;
       vertical-align: middle;
+      color: #3498db;
     }
     .audio-btn:hover {
-      color: #3498db;
+      color: #2980b9;
     }
 
     .page { display: none; }
     .page.active { display: block; }
     
-    /* Estilos para preguntas condicionales */
+    /* Estilos para preguntas condicionales - MODIFICADO */
     .conditional-questions {
       margin-top: 15px;
       padding: 15px;
       background-color: #f9f9f9;
       border-left: 4px solid #3498db;
       border-radius: 4px;
-      display: none;
+      /* REMOVIMOS display: none de aquí */
     }
     
-    .conditional-questions.active {
-      display: block;
+    /* AÑADIMOS esta clase para ocultar */
+    .hidden {
+      display: none !important;
     }
     
     .conditional-question {
@@ -219,12 +228,82 @@
     }
     
     .conditional-question input[type="text"],
-    .conditional-question input[type="date"] {
+    .conditional-question input[type="date"],
+    .conditional-question input[type="email"] {
       width: 100%;
       padding: 8px;
       border: 1px solid #ccc;
       border-radius: 4px;
       box-sizing: border-box;
+    }
+
+    /* Estilos para la página de mensaje informativo */
+    .info-message {
+      background-color: #e8f4f8;
+      border-left: 5px solid #3498db;
+      padding: 20px;
+      margin: 25px 0;
+      border-radius: 5px;
+      font-size: 1.1em;
+      line-height: 1.6;
+    }
+    
+    .info-message-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .info-message h3 {
+      margin: 0;
+      color: #1A4A5D;
+    }
+    
+    .message-audio-btn {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 1.5em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s ease;
+    }
+    input[type="number"] {
+      width: calc(100% - 22px);
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin-top: 5px;
+      font-family: "Trebuchet MS", Arial, sans-serif;
+      font-size: 14px;
+    }
+
+    /* Para los inputs dentro de la sección de fechas */
+    .seccion-mujeres-inputs {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .seccion-mujeres-inputs > div {
+      flex: 1;
+    }
+
+    .seccion-mujeres-inputs label {
+      font-weight: normal;
+      font-size: 0.9em;
+      margin-bottom: 3px;
+    }
+    
+    .message-audio-btn:hover {
+      background-color: #2980b9;
     }
   </style>
 </head>
@@ -483,11 +562,11 @@
               </label>
               <label class="opcion-btn">
                 <input type="radio" name="ha_donado" value="no" required> <span>No</span>
-              <label>
+              </label>
             </div>
     
             <!-- Preguntas condicionales que se muestran solo cuando la respuesta es "Sí" -->
-            <div class="conditional-questions" id="donacion-detalles">
+            <div class="conditional-questions hidden" id="donacion-detalles">
               <div class="conditional-question">
                 <label>¿Hace cuánto? (Escriba la fecha):</label>
                 <input type="date" name="fecha_ultima_donacion">
@@ -502,17 +581,18 @@
                 <label>¿Ha tenido reacción adversa a la donación?</label>
                 <div class="respuesta-group">
                   <label class="opcion-btn">
-                    <input type="radio" name="reaccion_adversa" value="si"> <span>Sí</span>
+                    <input type="radio" name="reaccion_adversa" value="si" onchange="toggleReaccionDetalle()"> <span>Sí</span>
                   </label>
                   <label class="opcion-btn">
-                    <input type="radio" name="reaccion_adversa" value="no"> <span>No</span>
+                    <input type="radio" name="reaccion_adversa" value="no" onchange="toggleReaccionDetalle()"> <span>No</span>
                   </label>
                 </div>
-              </div>
-              
-              <div class="conditional-question" id="reaccion-detalle-container" style="display: none;">
-                <label>¿Qué presentó?:</label>
-                <input type="text" name="reaccion_detalle" placeholder="Describa la reacción">
+                
+                <!-- CORREGIDO: Este div debe estar DENTRO del conditional-question de reacción -->
+                <div id="reaccion-detalle-container" class="hidden" style="margin-top: 10px;">
+                  <label>¿Qué presentó?:</label>
+                  <input type="text" name="reaccion_detalle" placeholder="Describa la reacción" style="width: 100%; padding: 8px;">
+                </div>
               </div>
             </div>
           </div>
@@ -530,7 +610,7 @@
               </label>
             </div>
     
-            <div class="conditional-questions" id="no-apto-detalles">
+            <div class="conditional-questions hidden" id="no-apto-detalles">
               <div class="conditional-question">
                 <label>¿Por qué?:</label>
                 <input type="text" name="razon_no_apto" placeholder="Describa la razón">
@@ -551,7 +631,7 @@
               </label>
             </div>
     
-            <div class="conditional-questions" id="sintomas-resfriado">
+            <div class="conditional-questions hidden" id="sintomas-resfriado">
               <div class="conditional-question">
                 <label>¿Ha tenido gripa en las últimas dos (2) semanas?</label>
                 <div class="respuesta-group">
@@ -591,7 +671,7 @@
               </label>
             </div>
     
-            <div class="conditional-questions" id="hospitalizacion-detalles">
+            <div class="conditional-questions hidden" id="hospitalizacion-detalles">
               <div class="conditional-question">
                 <label>¿Cuál?:</label>
                 <input type="text" name="detalle_hospitalizacion" placeholder="Describa la situación">
@@ -612,7 +692,7 @@
               </label>
             </div>
 
-            <div class="conditional-questions" id="transfusion-detalles">
+            <div class="conditional-questions hidden" id="transfusion-detalles">
               <div class="conditional-question">
                 <label>¿Hace cuánto?:</label>
                 <input type="text" name="tiempo_transfusion" placeholder="Ej: Hace 2 años, 6 meses...">
@@ -633,7 +713,7 @@
               </label>
             </div>
 
-            <div class="conditional-questions" id="odontologia-detalles">
+            <div class="conditional-questions hidden" id="odontologia-detalles">
               <div class="conditional-question">
                 <label>¿Cuál?:</label>
                 <input type="text" name="detalle_odontologia" placeholder="Ej: Extracción, limpieza, empaste...">
@@ -654,7 +734,7 @@
               </label>
             </div>
 
-            <div class="conditional-questions" id="problemas-salud-detalles">
+            <div class="conditional-questions hidden" id="problemas-salud-detalles">
               <div class="conditional-question">
                 <label>¿Cuál?:</label>
                 <input type="text" name="detalle_problemas_salud" placeholder="Especifique la enfermedad">
@@ -685,7 +765,7 @@
               </label>
             </div>
 
-            <div class="conditional-questions" id="medicamentos-detalles">
+            <div class="conditional-questions hidden" id="medicamentos-detalles">
               <div class="conditional-question">
                 <label>¿Cuál?:</label>
                 <input type="text" name="nombre_medicamento" placeholder="Nombre del medicamento">
@@ -716,7 +796,7 @@
               </label>
             </div>
 
-            <div class="conditional-questions" id="sintomas-detalles">
+            <div class="conditional-questions hidden" id="sintomas-detalles">
               <div class="conditional-question">
                 <label>Especifique los síntomas:</label>
                 <input type="text" name="detalle_sintomas" placeholder="Describa los síntomas presentados">
@@ -737,7 +817,7 @@
               </label>
             </div>
 
-            <div class="conditional-questions" id="vacunacion-detalles">
+            <div class="conditional-questions hidden" id="vacunacion-detalles">
               <div class="conditional-question">
                 <label>¿Qué vacuna recibió?:</label>
                 <input type="text" name="tipo_vacuna" placeholder="Ej: Influenza, COVID-19, Hepatitis...">
@@ -747,14 +827,498 @@
 
           <div class="navigation">
             <button type="button" onclick="prevPage(2)">Anterior</button>
-            <button type="submit">Enviar Encuesta</button>
+            <button type="button" onclick="nextPage()">Siguiente</button>
           </div>
         </div> 
+
+        <!-- PÁGINA 4 - MENSAJE INFORMATIVO -->
+        <div id="page4" class="page">
+          <h2>Información Importante para el Donante</h2>
+          
+          <div class="info-message">
+            <div class="info-message-header">
+              <h3>APRECIADO DONANTE:</h3>
+              <button type="button" class="message-audio-btn" onclick="leerMensajeCompleto()">
+                🔊
+              </button>
+            </div>
+            <p>
+              Con las preguntas que vienen a continuación, buscamos asegurar que los pacientes que van a recibir su sangre no van a correr riesgo de contraer una enfermedad infecciosa a través de la transfusión.
+            </p>
+          </div>
+
+          <div class="navigation">
+            <button type="button" onclick="prevPage(3)">Anterior</button>
+            <button type="button" onclick="nextPage(5)">Siguiente</button>
+          </div>
+        </div>
+        <!-- PÁGINA 5 - EVALUACIÓN DE RIESGO BIOLÓGICO Y SEXUAL -->
+        <div id="page5" class="page">
+          <h2>Evaluación de Riesgo Biológico y Sexual</h2>
+          
+          <!-- Pregunta 11 -->
+          <div class="question">
+            <label>11. ¿Ha tenido una nueva pareja sexual en los últimos seis (6) meses?</label>
+            <button type="button" class="audio-btn" onclick="leerTexto('¿Ha tenido una nueva pareja sexual en los últimos seis meses?')">🔊</button>
+            <div class="respuesta-group">
+              <label class="opcion-btn">
+                <input type="radio" name="nueva_pareja" value="si" required> <span>Sí</span>
+              </label>
+              <label class="opcion-btn">
+                <input type="radio" name="nueva_pareja" value="no" required> <span>No</span>
+              </label>
+            </div>
+          </div>
+        
+          <!-- Pregunta 12 -->
+          <div class="question">
+            <label>12. ¿Ha tenido relaciones sexuales con personas pertenecientes a alguna de las siguientes poblaciones: trabajadores sexuales, habitantes de calle, personas que se inyectan drogas?</label>
+            <button type="button" class="audio-btn" onclick="leerTexto('¿Ha tenido relaciones sexuales con personas pertenecientes a alguna de las siguientes poblaciones: trabajadores sexuales, habitantes de calle, personas que se inyectan drogas?')">🔊</button>
+            <div class="respuesta-group">
+              <label class="opcion-btn">
+                <input type="radio" name="relaciones_riesgo" value="si" required> <span>Sí</span>
+              </label>
+              <label class="opcion-btn">
+                <input type="radio" name="relaciones_riesgo" value="no" required> <span>No</span>
+              </label>
+            </div>
+          </div>
+        
+          <!-- Pregunta 13 -->
+          <div class="question">
+            <label>13. ¿Ha recibido sustancias psicoactivas o dinero a cambio de relaciones sexuales?</label>
+            <button type="button" class="audio-btn" onclick="leerTexto('¿Ha recibido sustancias psicoactivas o dinero a cambio de relaciones sexuales?')">🔊</button>
+            <div class="respuesta-group">
+              <label class="opcion-btn">
+                <input type="radio" name="sexo_por_dinero" value="si" required> <span>Sí</span>
+              </label>
+              <label class="opcion-btn">
+                <input type="radio" name="sexo_por_dinero" value="no" required> <span>No</span>
+              </label>
+            </div>
+          </div>
+        
+          <!-- Pregunta 14 -->
+          <div class="question">
+            <label>14. ¿Ha tenido relaciones sexuales con personas diagnosticadas con VIH, Hepatitis B, Hepatitis C, HTLV I/II, Sífilis?</label>
+            <button type="button" class="audio-btn" onclick="leerTexto('¿Ha tenido relaciones sexuales con personas diagnosticadas con VIH, Hepatitis B, Hepatitis C, HTLV uno dos, Sífilis?')">🔊</button>
+            <div class="respuesta-group">
+              <label class="opcion-btn">
+                <input type="radio" name="relaciones_enfermos" value="si" required> <span>Sí</span>
+              </label>
+              <label class="opcion-btn">
+                <input type="radio" name="relaciones_enfermos" value="no" required> <span>No</span>
+              </label>
+            </div>
+          </div>
+        
+          <!-- Pregunta 15 -->
+          <div class="question">
+            <label>15. ¿En los últimos doce (12) meses usted o su pareja sexual han estado privados de la libertad?</label>
+            <button type="button" class="audio-btn" onclick="leerTexto('¿En los últimos doce meses usted o su pareja sexual han estado privados de la libertad?')">🔊</button>
+            <div class="respuesta-group">
+              <label class="opcion-btn">
+                <input type="radio" name="privados_libertad" value="si" required> <span>Sí</span>
+              </label>
+              <label class="opcion-btn">
+                <input type="radio" name="privados_libertad" value="no" required> <span>No</span>
+              </label>
+            </div>
+          </div>
+        
+          <!-- Pregunta 16 - CON DETALLE CONDICIONAL -->
+          <div class="question" id="drogas-container">
+            <label>16. ¿Usó o usa marihuana, cocaína, heroína, bazuco, o alguna sustancia psicoactiva o algún otro estimulante o alucinógeno?</label>
+            <button type="button" class="audio-btn" onclick="leerTexto('¿Usó o usa marihuana, cocaína, heroína, bazuco, o alguna sustancia psicoactiva o algún otro estimulante o alucinógeno?')">🔊</button>
+            <div class="respuesta-group">
+              <label class="opcion-btn">
+                <input type="radio" name="uso_drogas" value="si" required> <span>Sí</span>
+              </label>
+              <label class="opcion-btn">
+                <input type="radio" name="uso_drogas" value="no" required> <span>No</span>
+              </label>
+            </div>
+            
+            <div class="conditional-questions hidden" id="drogas-detalle">
+              <div class="conditional-question">
+                <label>¿Cuál?:</label>
+                <input type="text" name="tipo_droga" placeholder="Especifique la sustancia">
+              </div>
+            </div>
+          </div>
+        
+          <!-- Pregunta 17 - COMPLEJA CON MÚLTIPLES SUBPREGUNTAS -->
+          <div class="question" id="ets-container">
+            <label>17. ¿Tuvo o ha sido tratado para sífilis, gonorrea, herpes genital, condiloma, papiloma virus, hepatitis, SIDA u otra enfermedad de transmisión sexual?</label>
+            <button type="button" class="audio-btn" onclick="leerTexto('¿Tuvo o ha sido tratado para sífilis, gonorrea, herpes genital, condiloma, papiloma virus, hepatitis, SIDA u otra enfermedad de transmisión sexual?')">🔊</button>
+            <div class="respuesta-group">
+              <label class="opcion-btn">
+                <input type="radio" name="tuvo_ets" value="si" required> <span>Sí</span>
+              </label>
+              <label class="opcion-btn">
+                <input type="radio" name="tuvo_ets" value="no" required> <span>No</span>
+              </label>
+            </div>
+            
+            <div class="conditional-questions hidden" id="ets-detalles">
+              <!-- Subpregunta A -->
+              <div class="conditional-question">
+                <label>A. ¿Usted recuerda si alguna vez en su vida ha botado por el pene o vagina alguna secreción blanca o verde?</label>
+                <div class="respuesta-group">
+                  <label class="opcion-btn">
+                    <input type="radio" name="secrecion_genital" value="si"> <span>Sí</span>
+                  </label>
+                  <label class="opcion-btn">
+                    <input type="radio" name="secrecion_genital" value="no"> <span>No</span>
+                  </label>
+                </div>
+              </div>
+              
+              <!-- Subpregunta A1 -->
+              <div class="conditional-question">
+                <label>¿Hace cuánto?</label>
+                <input type="text" name="tiempo_secrecion" placeholder="Ej: Hace 1 año, 6 meses...">
+              </div>
+              
+              <!-- Subpregunta A2 -->
+              <div class="conditional-question">
+                <label>Fue tratado:</label>
+                <div class="respuesta-group">
+                  <label class="opcion-btn">
+                    <input type="radio" name="tratado_secrecion" value="si"> <span>Sí</span>
+                  </label>
+                  <label class="opcion-btn">
+                    <input type="radio" name="tratado_secrecion" value="no"> <span>No</span>
+                  </label>
+                </div>
+              </div>
+              
+              <!-- Subpregunta A3 -->
+              <div class="conditional-question">
+                <label>Se curó:</label>
+                <div class="respuesta-group">
+                  <label class="opcion-btn">
+                    <input type="radio" name="curado_secrecion" value="si"> <span>Sí</span>
+                  </label>
+                  <label class="opcion-btn">
+                    <input type="radio" name="curado_secrecion" value="no"> <span>No</span>
+                  </label>
+                </div>
+              </div>
+              
+              <!-- Subpregunta B -->
+              <div class="conditional-question">
+                <label>B. ¿Usted recuerda si ha tenido lesión, grano, llaga, verruga en el pene o vagina?</label>
+                <div class="respuesta-group">
+                  <label class="opcion-btn">
+                    <input type="radio" name="lesion_genital" value="si"> <span>Sí</span>
+                  </label>
+                  <label class="opcion-btn">
+                    <input type="radio" name="lesion_genital" value="no"> <span>No</span>
+                  </label>
+                </div>
+              </div>
+              
+              <!-- Subpregunta B1 -->
+              <div class="conditional-question">
+                <label>¿Hace cuánto?</label>
+                <input type="text" name="tiempo_lesion" placeholder="Ej: Hace 2 años...">
+              </div>
+              
+              <!-- Subpregunta B2 -->
+              <div class="conditional-question">
+                <label>Fue tratado:</label>
+                <div class="respuesta-group">
+                  <label class="opcion-btn">
+                    <input type="radio" name="tratado_lesion" value="si"> <span>Sí</span>
+                  </label>
+                  <label class="opcion-btn">
+                    <input type="radio" name="tratado_lesion" value="no"> <span>No</span>
+                  </label>
+                </div>
+              </div>
+              
+              <!-- Subpregunta B3 -->
+              <div class="conditional-question">
+                <label>Se curó:</label>
+                <div class="respuesta-group">
+                  <label class="opcion-btn">
+                    <input type="radio" name="curado_lesion" value="si"> <span>Sí</span>
+                  </label>
+                  <label class="opcion-btn">
+                    <input type="radio" name="curado_lesion" value="no"> <span>No</span>
+                  </label>
+                </div>
+              </div>
+              
+              <!-- Subpregunta C -->
+              <div class="conditional-question">
+                <label>C. ¿Usted recuerda si alguna vez en su vida ha tenido sífilis?</label>
+                <div class="respuesta-group">
+                  <label class="opcion-btn">
+                    <input type="radio" name="tuvo_sifilis" value="si"> <span>Sí</span>
+                  </label>
+                  <label class="opcion-btn">
+                    <input type="radio" name="tuvo_sifilis" value="no"> <span>No</span>
+                  </label>
+                </div>
+              </div>
+              
+              <!-- Subpregunta C1 -->
+              <div class="conditional-question">
+                <label>¿Hace cuánto?</label>
+                <input type="text" name="tiempo_sifilis" placeholder="Ej: Hace 5 años...">
+              </div>
+              
+              <!-- Subpregunta C2 -->
+              <div class="conditional-question">
+                <label>Fue tratado:</label>
+                <div class="respuesta-group">
+                  <label class="opcion-btn">
+                    <input type="radio" name="tratado_sifilis" value="si"> <span>Sí</span>
+                  </label>
+                  <label class="opcion-btn">
+                    <input type="radio" name="tratado_sifilis" value="no"> <span>No</span>
+                  </label>
+                </div>
+              </div>
+              
+              <!-- Subpregunta C3 -->
+              <div class="conditional-question">
+                <label>Se curó:</label>
+                <div class="respuesta-group">
+                  <label class="opcion-btn">
+                    <input type="radio" name="curado_sifilis" value="si"> <span>Sí</span>
+                  </label>
+                  <label class="opcion-btn">
+                    <input type="radio" name="curado_sifilis" value="no"> <span>No</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+          <!-- Pregunta 18 -->
+          <div class="question">
+            <label>18. ¿En los últimos seis (6) meses le han practicado acupuntura, tatuajes, perforaciones de oreja, piercing, maquillaje permanente u otros procedimientos?</label>
+            <button type="button" class="audio-btn" onclick="leerTexto('¿En los últimos seis meses le han practicado acupuntura, tatuajes, perforaciones de oreja, piercing, maquillaje permanente u otros procedimientos?')">🔊</button>
+            <div class="respuesta-group">
+              <label class="opcion-btn">
+                <input type="radio" name="procedimientos_piel" value="si" required> <span>Sí</span>
+              </label>
+              <label class="opcion-btn">
+                <input type="radio" name="procedimientos_piel" value="no" required> <span>No</span>
+              </label>
+            </div>
+          </div>
+        
+          <!-- Pregunta 19 -->
+          <div class="question">
+            <label>19. ¿En el último mes ha estado en contacto con personas que padezcan sarampión, rubéola, paperas o varicela?</label>
+            <button type="button" class="audio-btn" onclick="leerTexto('¿En el último mes ha estado en contacto con personas que padezcan sarampión, rubéola, paperas o varicela?')">🔊</button>
+            <div class="respuesta-group">
+              <label class="opcion-btn">
+                <input type="radio" name="contacto_enfermedades" value="si" required> <span>Sí</span>
+              </label>
+              <label class="opcion-btn">
+                <input type="radio" name="contacto_enfermedades" value="no" required> <span>No</span>
+              </label>
+            </div>
+          </div>
+        
+          <!-- Pregunta 20 -->
+          <div class="question">
+            <label>20. ¿En los últimos seis (6) meses ha tenido accidentes de riesgo biológico (contacto con sangre, líquidos corporales, pinchazos con agujas contaminadas)?</label>
+            <button type="button" class="audio-btn" onclick="leerTexto('¿En los últimos seis meses ha tenido accidentes de riesgo biológico, contacto con sangre, líquidos corporales, pinchazos con agujas contaminadas?')">🔊</button>
+            <div class="respuesta-group">
+              <label class="opcion-btn">
+                <input type="radio" name="accidente_biologico" value="si" required> <span>Sí</span>
+              </label>
+              <label class="opcion-btn">
+                <input type="radio" name="accidente_biologico" value="no" required> <span>No</span>
+              </label>
+            </div>
+          </div>
+        
+          <!-- Pregunta 21 - CON DETALLE CONDICIONAL -->
+          <div class="question" id="enfermedades-tropicales-container">
+            <label>21. ¿Alguna vez en su vida se ha enfermado o ha recibido tratamiento para paludismo, leishmaniasis, fiebre amarilla, dengue, Zika y Chikungunya?</label>
+            <button type="button" class="audio-btn" onclick="leerTexto('¿Alguna vez en su vida se ha enfermado o ha recibido tratamiento para paludismo, leishmaniasis, fiebre amarilla, dengue, Zika y Chikungunya?')">🔊</button>
+            <div class="respuesta-group">
+              <label class="opcion-btn">
+                <input type="radio" name="enfermedades_tropicales" value="si" required> <span>Sí</span>
+              </label>
+              <label class="opcion-btn">
+                <input type="radio" name="enfermedades_tropicales" value="no" required> <span>No</span>
+              </label>
+            </div>
+            
+            <div class="conditional-questions hidden" id="enfermedades-detalle">
+              <div class="conditional-question">
+                <label>¿Cuál?:</label>
+                <input type="text" name="tipo_enfermedad_tropical" placeholder="Ej: Dengue, Paludismo...">
+              </div>
+            </div>
+          </div>
+        
+          <!-- Pregunta 22 -->
+          <div class="question">
+            <label>22. ¿En los últimos 2 años ha visitado zonas donde hay paludismo, leishmaniasis, fiebre amarilla o dengue?</label>
+            <button type="button" class="audio-btn" onclick="leerTexto('¿En los últimos 2 años ha visitado zonas donde hay paludismo, leishmaniasis, fiebre amarilla o dengue?')">🔊</button>
+            <div class="respuesta-group">
+              <label class="opcion-btn">
+                <input type="radio" name="visito_zona_riesgo" value="si" required> <span>Sí</span>
+              </label>
+              <label class="opcion-btn">
+                <input type="radio" name="visito_zona_riesgo" value="no" required> <span>No</span>
+              </label>
+            </div>
+          </div>
+        
+          <!-- Pregunta 23 -->
+          <div class="question">
+            <label>23. ¿Ha tenido enfermedad de Chagas o ha estado en zonas donde habita el insecto pito, chinche picudo, besador, rondador o chupa sangre?</label>
+            <button type="button" class="audio-btn" onclick="leerTexto('¿Ha tenido enfermedad de Chagas o ha estado en zonas donde habita el insecto pito, chinche picudo, besador, rondador o chupa sangre?')">🔊</button>
+            <div class="respuesta-group">
+              <label class="opcion-btn">
+                <input type="radio" name="chagas_zona" value="si" required> <span>Sí</span>
+              </label>
+              <label class="opcion-btn">
+                <input type="radio" name="chagas_zona" value="no" required> <span>No</span>
+              </label>
+            </div>
+          </div>
+        
+          <!-- Pregunta 24 - CON MÚLTIPLES DETALLES -->
+          <div class="question" id="viajes-container">
+            <label>24. ¿Ha vivido fuera del país o de la ciudad en que reside actualmente?</label>
+            <button type="button" class="audio-btn" onclick="leerTexto('¿Ha vivido fuera del país o de la ciudad en que reside actualmente?')">🔊</button>
+            <div class="respuesta-group">
+              <label class="opcion-btn">
+                <input type="radio" name="vivido_fuera" value="si" required> <span>Sí</span>
+              </label>
+              <label class="opcion-btn">
+                <input type="radio" name="vivido_fuera" value="no" required> <span>No</span>
+              </label>
+            </div>
+            
+            <div class="conditional-questions hidden" id="viajes-detalles">
+              <div class="conditional-question">
+                <label>¿Dónde?</label>
+                <input type="text" name="lugar_viaje" placeholder="Ej: México, España, Otra ciudad...">
+              </div>
+              
+              <div class="conditional-question">
+                <label>¿Hace cuánto?</label>
+                <input type="text" name="tiempo_viaje" placeholder="Ej: Hace 3 años, 6 meses...">
+              </div>
+              
+              <div class="conditional-question">
+                <label>¿Por cuánto tiempo?</label>
+                <input type="text" name="duracion_viaje" placeholder="Ej: 2 semanas, 6 meses, 1 año...">
+              </div>
+            </div>
+          </div>
+        
+          <!-- Pregunta 25 -->
+          <div class="question">
+            <label>25. ¿Leyó y comprendió el cuestionario y fueron contestadas todas sus dudas al respecto?</label>
+            <button type="button" class="audio-btn" onclick="leerTexto('¿Leyó y comprendió el cuestionario y fueron contestadas todas sus dudas al respecto?')">🔊</button>
+            <div class="respuesta-group">
+              <label class="opcion-btn">
+                <input type="radio" name="comprendio_cuestionario" value="si" required> <span>Sí</span>
+              </label>
+              <label class="opcion-btn">
+                <input type="radio" name="comprendio_cuestionario" value="no" required> <span>No</span>
+              </label>
+            </div>
+            
+            <div class="conditional-questions hidden" id="actividad-detalle">
+              <div class="conditional-question">
+                <label>¿Qué actividad realizará después de la donación?</label>
+                <input type="text" name="actividad_post_donacion" placeholder="Ej: Descansar, Trabajar, Estudiar...">
+              </div>
+            </div>
+          </div>
+        
+          <!-- SECCIÓN ESPECIAL PARA MUJERES -->
+          <div id="seccion-mujeres" class="hidden">
+            <h3>Sección Especial para Mujeres</h3>
+            
+            <!-- Pregunta 26 -->
+            <label>26. Fecha de la última menstruación (Día/Mes/Año)</label>
+            <button type="button" class="audio-btn" onclick="leerTexto('Fecha de la última menstruación, día, mes, año')">🔊</button>
+            <div class="seccion-mujeres-inputs">
+              <div>
+                <label>DÍA</label>
+                <input type="number" name="ultima_regla_dia" min="1" max="31" placeholder="DD">
+              </div>
+              <div>
+                <label>MES</label>
+                <select name="ultima_regla_mes">
+                  <option value="">Mes</option>
+                  <option value="01">Enero</option>
+                  <option value="02">Febrero</option>
+                  <!-- ... resto de meses ... -->
+                </select>
+              </div>
+              <div>
+                <label>AÑO</label>
+                <input type="number" name="ultima_regla_anio" min="2000" max="2025" placeholder="AAAA">
+              </div>
+            </div>
+                    
+            <!-- Pregunta 27 -->
+            <div class="question">
+              <label>27. ¿Cuántos embarazos, partos y abortos ha tenido?</label>
+              <button type="button" class="audio-btn" onclick="leerTexto('¿Cuántos embarazos, partos y abortos ha tenido?')">🔊</button>
+              <div style="display: flex; gap: 15px; margin-top: 10px;">
+                <div style="flex: 1;">
+                  <label>Embarazos</label>
+                  <input type="number" name="numero_embarazos" min="0" max="20" placeholder="0" style="width: 100%;">
+                </div>
+                <div style="flex: 1;">
+                  <label>Partos</label>
+                  <input type="number" name="numero_partos" min="0" max="20" placeholder="0" style="width: 100%;">
+                </div>
+                <div style="flex: 1;">
+                  <label>Abortos</label>
+                  <input type="number" name="numero_abortos" min="0" max="20" placeholder="0" style="width: 100%;">
+                </div>
+              </div>
+            </div>
+        
+            <!-- Pregunta 28 - CON DETALLE CONDICIONAL -->
+            <div class="question" id="embarazo-container">
+              <label>28. ¿Está embarazada, lactando o ha tenido abortos, legrados, partos o cesáreas en el último año?</label>
+              <button type="button" class="audio-btn" onclick="leerTexto('¿Está embarazada, lactando o ha tenido abortos, legrados, partos o cesáreas en el último año?')">🔊</button>
+              <div class="respuesta-group">
+                <label class="opcion-btn">
+                  <input type="radio" name="embarazo_reciente" value="si" required> <span>Sí</span>
+                </label>
+                <label class="opcion-btn">
+                  <input type="radio" name="embarazo_reciente" value="no" required> <span>No</span>
+                </label>
+              </div>
+              
+              <div class="conditional-questions hidden" id="embarazo-detalle">
+                <div class="conditional-question">
+                  <label>¿Cuál?</label>
+                  <input type="text" name="detalle_embarazo" placeholder="Ej: Embarazada actualmente, Cesárea hace 6 meses...">
+                </div>
+              </div>
+            </div>
+          </div>
+        
+          <div class="navigation">
+            <button type="button" onclick="prevPage(4)">Anterior</button>
+            <button type="submit">Enviar Encuesta</button>
+          </div>
+        </div>
       </form>
     </div>
   </div>
 
-  <script src="departamentos_municipios.js"></script>
   <script>
     // --- LÓGICA GENERAL DE LA ENCUESTA ---
 
@@ -780,6 +1344,12 @@
       synth.speak(utterance);
     }
 
+    // Función para leer el mensaje completo de la página 4
+    function leerMensajeCompleto() {
+      const mensajeCompleto = "APRECIADO DONANTE: Con las preguntas que vienen a continuación, buscamos asegurar que los pacientes que van a recibir su sangre no van a correr riesgo de contraer una enfermedad infecciosa a través de la transfusión.";
+      leerTexto(mensajeCompleto);
+    }
+
     // Manejar el envío del formulario
     document.getElementById('donantesForm')?.addEventListener('submit', function(e) {
       e.preventDefault();
@@ -789,7 +1359,7 @@
 
     // Lógica para la navegación entre páginas
     let currentPage = 1;
-    const totalPages = 3;
+    const totalPages = 5;
 
     function showPage(pageNumber) {
       // Ocultar todas las páginas
@@ -832,10 +1402,12 @@
       });
 
       if (selectedValue === 'si') {
-        if (detallesDiv) detallesDiv.classList.add('active');
+        if (detallesDiv) {
+          detallesDiv.classList.remove('hidden');
+        }
       } else {
         if (detallesDiv) {
-          detallesDiv.classList.remove('active');
+          detallesDiv.classList.add('hidden');
           // Limpiar campos cuando se oculta
           detallesDiv.querySelectorAll('input').forEach(input => {
             input.value = '';
@@ -844,36 +1416,48 @@
       }
     }
 
-    // Función especial para reacción adversa - Versión alternativa
-    function toggleReaccionDetalle() {
+    // Función simplificada para reacción adversa
+    function toggleReaccionDetale() {
       const reaccionDetalleContainer = document.getElementById('reaccion-detalle-container');
-      const radios = document.querySelectorAll('input[name="reaccion_adversa"]');
-        
-      let selectedValue = '';
-      radios.forEach(radio => {
-        if (radio.checked) {
-          selectedValue = radio.value;
-        }
-      });
+      const siRadio = document.querySelector('input[name="reaccion_adversa"][value="si"]');
       
-      if (selectedValue === 'si') {
-        if (reaccionDetalleContainer) {
-          reaccionDetalleContainer.style.display = 'block';
-        }
+      if (siRadio && siRadio.checked) {
+        reaccionDetalleContainer.classList.remove('hidden');
       } else {
-        if (reaccionDetalleContainer) {
-          reaccionDetalleContainer.style.display = 'none';
-          // Limpiar el campo si existe
-          const detalleInput = reaccionDetalleContainer.querySelector('input[name="reaccion_detalle"]');
-          if (detalleInput) {
-            detalleInput.value = '';
+        reaccionDetalleContainer.classList.add('hidden');
+        // Limpiar el campo
+        const detalleInput = document.querySelector('input[name="reaccion_detalle"]');
+        if (detalleInput) detalleInput.value = '';
+      }
+    }
+    // Función para mostrar/ocultar sección mujeres:
+      function toggleSeccionMujeres() {
+        const generoSelect = document.querySelector('select[name="genero"]');
+        const seccionMujeres = document.getElementById('seccion-mujeres');
+
+        if (generoSelect && seccionMujeres) {
+          generoSelect.addEventListener('change', function() {
+            if (this.value === 'Femenino') {
+              seccionMujeres.classList.remove('hidden');
+            } else {
+              seccionMujeres.classList.add('hidden');
+              // Limpiar campos de sección mujeres
+              seccionMujeres.querySelectorAll('input, select').forEach(input => {
+                input.value = '';
+              });
+            }
+          });
+
+          // Ejecutar al inicio
+          if (generoSelect.value === 'Femenino') {
+            seccionMujeres.classList.remove('hidden');
           }
         }
       }
-    }
-
     // Inicializar todos los toggles condicionales
     function initConditionalQuestions() {
+      console.log('Inicializando preguntas condicionales...');
+      
       // Configurar event listeners para todas las preguntas condicionales
       const conditionalConfigs = [
         { name: 'ha_donado', container: 'donacion-detalles' },
@@ -885,26 +1469,44 @@
         { name: 'problemas_salud', container: 'problemas-salud-detalles' },
         { name: 'tomo_medicamento', container: 'medicamentos-detalles' },
         { name: 'sintomas_recientes', container: 'sintomas-detalles' },
-        { name: 'vacunado', container: 'vacunacion-detalles' }
+        { name: 'vacunado', container: 'vacunacion-detalles' },
+        { name: 'uso_drogas', container: 'drogas-detalle' },
+        { name: 'tuvo_ets', container: 'ets-detalles' },
+        { name: 'enfermedades_tropicales', container: 'enfermedades-detalle' },
+        { name: 'vivido_fuera', container: 'viajes-detalles' },
+        { name: 'comprendio_cuestionario', container: 'actividad-detalle' },
+        { name: 'embarazo_reciente', container: 'embarazo-detalle' }
       ];
 
       // Configurar listeners para cada grupo de radios
       conditionalConfigs.forEach(config => {
         const radios = document.querySelectorAll(`input[name="${config.name}"]`);
+        
         if (radios.length > 0) {
           radios.forEach(radio => {
             radio.addEventListener('change', () => {
               toggleConditionalQuestions(config.name, config.container);
             });
+            
+            // También ejecutar al inicio para establecer estado inicial
+            if (radio.checked) {
+              toggleConditionalQuestions(config.name, config.container);
+            }
           });
         }
       });
 
       // Configurar listener especial para reacción adversa
       const radiosReaccion = document.querySelectorAll('input[name="reaccion_adversa"]');
+      
       if (radiosReaccion.length > 0) {
         radiosReaccion.forEach(radio => {
-          radio.addEventListener('change', toggleReaccionDetalle);
+          radio.addEventListener('change', toggleReaccionDetale);
+          
+          // También ejecutar al inicio
+          if (radio.checked) {
+            toggleReaccionDetale();
+          }
         });
       }
 
@@ -912,11 +1514,15 @@
       conditionalConfigs.forEach(config => {
         toggleConditionalQuestions(config.name, config.container);
       });
-      toggleReaccionDetalle();
+      toggleReaccionDetale(); // Inicializar reacción adversa
+      
+      console.log('Preguntas condicionales inicializadas');
     }
 
     // --- LÓGICA DEL VIDEO Y FUNCIONALIDAD DE LA PÁGINA ---
     document.addEventListener('DOMContentLoaded', function() {
+      console.log('DOM completamente cargado');
+      
       const video = document.getElementById('intro-video');
       const understoodBtn = document.getElementById('video-understood');
       const videoMessage = document.getElementById('video-message');
@@ -926,7 +1532,7 @@
       // Lógica de reproducción del video
       if (video && understoodBtn && videoMessage) {
         setTimeout(() => {
-          video.play();
+          video.play().catch(e => console.log('Autoplay bloqueado, el usuario debe iniciar manualmente'));
         }, 2000);
 
         video.addEventListener('ended', function() {
@@ -954,7 +1560,7 @@
               video.currentTime = 0;
               video.load();
               setTimeout(() => {
-                video.play();
+                video.play().catch(e => console.log('Autoplay bloqueado'));
               }, 500);
             }
           });
@@ -965,7 +1571,21 @@
       const departamentoSelect = document.getElementById('departamento');
       const municipioSelect = document.getElementById('municipio');
 
-      if (departamentoSelect && municipioSelect && typeof municipiosPorDepartamento !== 'undefined') {
+      if (departamentoSelect && municipioSelect) {
+        // Datos de ejemplo para Colombia
+        const municipiosPorDepartamento = {
+          "Antioquia": ["Medellín", "Bello", "Itagüí", "Envigado", "Rionegro"],
+          "Cundinamarca": ["Bogotá", "Soacha", "Chía", "Zipaquirá", "Facatativá"],
+          "Valle del Cauca": ["Cali", "Palmira", "Buenaventura", "Tuluá", "Cartago"],
+          "Atlántico": ["Barranquilla", "Soledad", "Malambo", "Puerto Colombia"],
+          "Santander": ["Bucaramanga", "Floridablanca", "Girón", "Piedecuesta"],
+          "Bolívar": ["Cartagena", "Magangué", "Turbaco", "Arjona"],
+          "Nariño": ["Pasto", "Ipiales", "Tumaco", "Samaniego"],
+          "Córdoba": ["Montería", "Cereté", "Lorica", "Sahagún"],
+          "Boyacá": ["Tunja", "Duitama", "Sogamoso", "Chiquinquirá"],
+          "Meta": ["Villavicencio", "Acacías", "Granada", "San Martín"]
+        };
+
         // Cargar todos los departamentos disponibles en el select
         const departamentos = Object.keys(municipiosPorDepartamento);
         
@@ -999,14 +1619,35 @@
             });
           }
         });
+
+        // Cargar municipios si ya hay un departamento seleccionado
+        if (departamentoSelect.value) {
+          const event = new Event('change');
+          departamentoSelect.dispatchEvent(event);
+        }
       }
 
-    // --- LÓGICA PARA PREGUNTAS CONDICIONALES ---
-    // Inicializar todas las preguntas condicionales
-    initConditionalQuestions();
+      // --- LÓGICA PARA PREGUNTAS CONDICIONALES ---
+      // Inicializar todas las preguntas condicionales
+      initConditionalQuestions();
 
       // Asegurar que solo la página 1 sea visible inicialmente
       showPage(1);
+      
+      // Forzar una verificación inicial de todos los estados
+      setTimeout(() => {
+        console.log('Verificación final de estados');
+        // Verificar si hay radios ya seleccionados (por si acaso)
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+          if (radio.checked) {
+            console.log(`Radio ${radio.name} está seleccionado con valor ${radio.value}`);
+            // Disparar el evento change manualmente
+            const event = new Event('change');
+            radio.dispatchEvent(event);
+          }
+        });
+      }, 500);
+      toggleSeccionMujeres();
     });
   </script>
 </body>
