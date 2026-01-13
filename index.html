@@ -160,12 +160,12 @@
       font-weight: bold;
     }
     .opcion-btn input[type="radio"]:checked[value="si"] + span {
-      background-color: #27ae60; /* Color verde */
-      border-color: #27ae60;
+      background-color: #6f7471; /* Blanco */
+      border-color: #6f7471;
     }
     .opcion-btn input[type="radio"]:checked[value="no"] + span {
-      background-color: #e74c3c; /* Color rojo */
-      border-color: #e74c3c;
+      background-color: #6f7471; /* Blanco */
+      border-color: #6f7471;
     }
 
     /* Navegación y otros botones */
@@ -203,17 +203,16 @@
     .page { display: none; }
     .page.active { display: block; }
     
-    /* Estilos para preguntas condicionales - MODIFICADO */
+    /* Estilos para preguntas condicionales */
     .conditional-questions {
       margin-top: 15px;
       padding: 15px;
       background-color: #f9f9f9;
       border-left: 4px solid #3498db;
       border-radius: 4px;
-      /* REMOVIMOS display: none de aquí */
     }
     
-    /* AÑADIMOS esta clase para ocultar */
+    /* Clase para ocultar */
     .hidden {
       display: none !important;
     }
@@ -274,6 +273,7 @@
       justify-content: center;
       transition: background-color 0.3s ease;
     }
+    
     input[type="number"] {
       width: calc(100% - 22px);
       padding: 10px;
@@ -447,7 +447,7 @@
               <option value="B+">B+</option>
               <option value="B-">B-</option>
               <option value="AB+">AB+</option>
-              <option value="AB-">AB-</option>
+              <option value="AB-">AB  </option>
               <option value="Otro">Otro</option>
               <option value="No sabe">No sabe</option>
             </select>
@@ -581,10 +581,10 @@
                 <label>¿Ha tenido reacción adversa a la donación?</label>
                 <div class="respuesta-group">
                   <label class="opcion-btn">
-                    <input type="radio" name="reaccion_adversa" value="si" onchange="toggleReaccionDetalle()"> <span>Sí</span>
+                    <input type="radio" name="reaccion_adversa" value="si"> <span>Sí</span>
                   </label>
                   <label class="opcion-btn">
-                    <input type="radio" name="reaccion_adversa" value="no" onchange="toggleReaccionDetalle()"> <span>No</span>
+                    <input type="radio" name="reaccion_adversa" value="no"> <span>No</span>
                   </label>
                 </div>
                 
@@ -849,9 +849,10 @@
 
           <div class="navigation">
             <button type="button" onclick="prevPage(3)">Anterior</button>
-            <button type="button" onclick="nextPage(5)">Siguiente</button>
+            <button type="button" onclick="nextPage()">Siguiente</button>
           </div>
         </div>
+
         <!-- PÁGINA 5 - EVALUACIÓN DE RIESGO BIOLÓGICO Y SEXUAL -->
         <div id="page5" class="page">
           <h2>Evaluación de Riesgo Biológico y Sexual</h2>
@@ -1213,9 +1214,17 @@
                 <input type="text" name="tiempo_viaje" placeholder="Ej: Hace 3 años, 6 meses...">
               </div>
               
+              <!-- Subpregunta C3 -->
               <div class="conditional-question">
-                <label>¿Por cuánto tiempo?</label>
-                <input type="text" name="duracion_viaje" placeholder="Ej: 2 semanas, 6 meses, 1 año...">
+                <label>Se curó:</label>
+                <div class="respuesta-group">
+                  <label class="opcion-btn">
+                    <input type="radio" name="curado_sifilis" value="si"> <span>Sí</span>
+                  </label>
+                  <label class="opcion-btn">
+                    <input type="radio" name="curado_sifilis" value="no"> <span>No</span>
+                  </label>
+                </div>
               </div>
             </div>
           </div>
@@ -1259,7 +1268,16 @@
                   <option value="">Mes</option>
                   <option value="01">Enero</option>
                   <option value="02">Febrero</option>
-                  <!-- ... resto de meses ... -->
+                  <option value="03">Marzo</option>
+                  <option value="04">Abril</option>
+                  <option value="05">Mayo</option>
+                  <option value="06">Junio</option>
+                  <option value="07">Julio</option>
+                  <option value="08">Agosto</option>
+                  <option value="09">Septiembre</option>
+                  <option value="10">Octubre</option>
+                  <option value="11">Noviembre</option>
+                  <option value="12">Diciembre</option>
                 </select>
               </div>
               <div>
@@ -1320,8 +1338,8 @@
   </div>
 
   <script>
-    // --- LÓGICA GENERAL DE LA ENCUESTA ---
-
+    // ========== FUNCIONES BÁSICAS ==========
+    
     // Función para continuar a la encuesta
     function proceedToSurvey() {
       const videoScreen = document.getElementById('video-screen');
@@ -1331,8 +1349,6 @@
         videoScreen.style.display = 'none';
         mainContent.style.display = 'block';
         window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else {
-        console.error("Error: No se encontraron los elementos necesarios");
       }
     }
 
@@ -1350,14 +1366,8 @@
       leerTexto(mensajeCompleto);
     }
 
-    // Manejar el envío del formulario
-    document.getElementById('donantesForm')?.addEventListener('submit', function(e) {
-      e.preventDefault();
-      alert('Gracias por completar la encuesta. Sus respuestas han sido enviadas.');
-      // Aquí puedes agregar la lógica para enviar el formulario a un servidor
-    });
-
-    // Lógica para la navegación entre páginas
+    // ========== NAVEGACIÓN ENTRE PÁGINAS ==========
+    
     let currentPage = 1;
     const totalPages = 5;
 
@@ -1372,7 +1382,6 @@
       if (pageToShow) {
         pageToShow.classList.add('active');
         currentPage = pageNumber;
-        // Hacer scroll al inicio de la página
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }
@@ -1387,9 +1396,9 @@
       showPage(pageNumber);
     }
 
-    // --- FUNCIONES PARA PREGUNTAS CONDICIONALES ---
-
-    // Función para mostrar/ocultar preguntas condicionales
+    // ========== FUNCIONES PARA PREGUNTAS CONDICIONALES ==========
+    
+    // Función general para mostrar/ocultar preguntas condicionales
     function toggleConditionalQuestions(radioName, containerId) {
       const radios = document.querySelectorAll(`input[name="${radioName}"]`);
       const detallesDiv = document.getElementById(containerId);
@@ -1402,13 +1411,10 @@
       });
 
       if (selectedValue === 'si') {
-        if (detallesDiv) {
-          detallesDiv.classList.remove('hidden');
-        }
+        if (detallesDiv) detallesDiv.classList.remove('hidden');
       } else {
         if (detallesDiv) {
           detallesDiv.classList.add('hidden');
-          // Limpiar campos cuando se oculta
           detallesDiv.querySelectorAll('input').forEach(input => {
             input.value = '';
           });
@@ -1416,49 +1422,173 @@
       }
     }
 
-    // Función simplificada para reacción adversa
-    function toggleReaccionDetale() {
+    // Función específica para reacción adversa
+    function toggleReaccionDetalle() {
+      const radios = document.querySelectorAll('input[name="reaccion_adversa"]');
       const reaccionDetalleContainer = document.getElementById('reaccion-detalle-container');
-      const siRadio = document.querySelector('input[name="reaccion_adversa"][value="si"]');
       
-      if (siRadio && siRadio.checked) {
-        reaccionDetalleContainer.classList.remove('hidden');
+      let selectedValue = '';
+      radios.forEach(radio => {
+        if (radio.checked) {
+          selectedValue = radio.value;
+        }
+      });
+
+      if (selectedValue === 'si') {
+        if (reaccionDetalleContainer) reaccionDetalleContainer.classList.remove('hidden');
       } else {
-        reaccionDetalleContainer.classList.add('hidden');
-        // Limpiar el campo
-        const detalleInput = document.querySelector('input[name="reaccion_detalle"]');
-        if (detalleInput) detalleInput.value = '';
-      }
-    }
-    // Función para mostrar/ocultar sección mujeres:
-      function toggleSeccionMujeres() {
-        const generoSelect = document.querySelector('select[name="genero"]');
-        const seccionMujeres = document.getElementById('seccion-mujeres');
-
-        if (generoSelect && seccionMujeres) {
-          generoSelect.addEventListener('change', function() {
-            if (this.value === 'Femenino') {
-              seccionMujeres.classList.remove('hidden');
-            } else {
-              seccionMujeres.classList.add('hidden');
-              // Limpiar campos de sección mujeres
-              seccionMujeres.querySelectorAll('input, select').forEach(input => {
-                input.value = '';
-              });
-            }
-          });
-
-          // Ejecutar al inicio
-          if (generoSelect.value === 'Femenino') {
-            seccionMujeres.classList.remove('hidden');
-          }
+        if (reaccionDetalleContainer) {
+          reaccionDetalleContainer.classList.add('hidden');
+          const detalleInput = document.querySelector('input[name="reaccion_detalle"]');
+          if (detalleInput) detalleInput.value = '';
         }
       }
-    // Inicializar todos los toggles condicionales
-    function initConditionalQuestions() {
-      console.log('Inicializando preguntas condicionales...');
+    }
+
+    // ========== FUNCIÓN PARA CARGAR DEPARTAMENTOS ==========
+    
+    function cargarDepartamentosDesdeJS() {
+      const departamentoSelect = document.getElementById('departamento');
+      const municipioSelect = document.getElementById('municipio');
       
-      // Configurar event listeners para todas las preguntas condicionales
+      if (!departamentoSelect || !municipioSelect) return;
+      
+      departamentoSelect.innerHTML = '<option value="">Seleccione un departamento</option>';
+      municipioSelect.innerHTML = '<option value="">Seleccione un municipio</option>';
+      
+      // Verificar si tenemos los datos de departamentos
+      if (typeof municipiosPorDepartamento === 'undefined') {
+        console.log('Cargando datos de departamentos...');
+        // Intentar cargar el archivo
+        const script = document.createElement('script');
+        script.src = 'departamentos_municipios.js';
+        script.onload = function() {
+          console.log('Datos de departamentos cargados');
+          cargarDepartamentosDesdeJS(); // Volver a ejecutar
+        };
+        script.onerror = function() {
+          console.error('Error cargando datos de departamentos');
+        };
+        document.head.appendChild(script);
+        return;
+      }
+      
+      // Ordenar departamentos alfabéticamente
+      const departamentosOrdenados = Object.keys(municipiosPorDepartamento).sort();
+      
+      // Llenar select de departamentos
+      departamentosOrdenados.forEach(departamento => {
+        const option = document.createElement('option');
+        option.value = departamento;
+        option.textContent = departamento;
+        departamentoSelect.appendChild(option);
+      });
+      
+      // Evento para cargar municipios cuando se selecciona un departamento
+      departamentoSelect.addEventListener('change', function() {
+        const departamentoSeleccionado = this.value;
+        const municipios = municipiosPorDepartamento[departamentoSeleccionado];
+        
+        municipioSelect.innerHTML = '<option value="">Seleccione un municipio</option>';
+        
+        if (municipios && municipios.length > 0) {
+          const municipiosOrdenados = [...municipios].sort();
+          
+          municipiosOrdenados.forEach(municipio => {
+            const option = document.createElement('option');
+            option.value = municipio;
+            option.textContent = municipio;
+            municipioSelect.appendChild(option);
+          });
+        }
+      });
+    }
+
+    // ========== FUNCIÓN PARA SECCIÓN MUJERES ==========
+    
+    function toggleSeccionMujeres() {
+      const generoSelect = document.querySelector('select[name="genero"]');
+      const seccionMujeres = document.getElementById('seccion-mujeres');
+
+      if (generoSelect && seccionMujeres) {
+        generoSelect.addEventListener('change', function() {
+          if (this.value === 'Femenino') {
+            seccionMujeres.classList.remove('hidden');
+          } else {
+            seccionMujeres.classList.add('hidden');
+            seccionMujeres.querySelectorAll('input, select').forEach(input => {
+              input.value = '';
+            });
+          }
+        });
+
+        // Estado inicial
+        if (generoSelect.value === 'Femenino') {
+          seccionMujeres.classList.remove('hidden');
+        }
+      }
+    }
+
+    // ========== INICIALIZACIÓN DE TODO ==========
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Encuesta inicializada');
+      
+      // 1. Configurar video
+      const video = document.getElementById('intro-video');
+      const understoodBtn = document.getElementById('video-understood');
+      const videoMessage = document.getElementById('video-message');
+      
+      if (video && understoodBtn && videoMessage) {
+        // Intentar reproducir automáticamente
+        setTimeout(() => {
+          video.play().catch(e => {
+            console.log('Autoplay bloqueado. El usuario debe iniciar manualmente.');
+            videoMessage.textContent = "Por favor, haz clic en el botón de reproducción para ver el video.";
+          });
+        }, 1000);
+        
+        // Mostrar botón cuando termine el video
+        video.addEventListener('ended', function() {
+          videoMessage.textContent = "¿Entendió el mensaje del video?";
+          understoodBtn.style.display = 'block';
+          understoodBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+      }
+      
+      // 2. Configurar primera pregunta (video)
+      const radioButtons = document.querySelectorAll('input[name="entendio_info"]');
+      const nextPageBtn = document.getElementById('next-page-btn-1');
+      const videoScreen = document.getElementById('video-screen');
+      const mainContent = document.getElementById('main-content');
+
+      if (radioButtons.length > 0 && nextPageBtn) {
+        radioButtons.forEach(radio => {
+          radio.addEventListener('change', function() {
+            if (this.value === 'si') {
+              nextPageBtn.style.display = 'inline-block';
+            } else if (this.value === 'no') {
+              nextPageBtn.style.display = 'none';
+              mainContent.style.display = 'none';
+              videoScreen.style.display = 'flex';
+              
+              // Reiniciar video
+              if (video) {
+                video.currentTime = 0;
+                video.load();
+                setTimeout(() => {
+                  video.play().catch(e => console.log('Error al reproducir'));
+                }, 500);
+              }
+            }
+          });
+        });
+      }
+      
+      // 3. Cargar departamentos
+      cargarDepartamentosDesdeJS();
+      
+      // 4. Inicializar todas las preguntas condicionales
       const conditionalConfigs = [
         { name: 'ha_donado', container: 'donacion-detalles' },
         { name: 'no_apto', container: 'no-apto-detalles' },
@@ -1478,176 +1608,40 @@
         { name: 'embarazo_reciente', container: 'embarazo-detalle' }
       ];
 
-      // Configurar listeners para cada grupo de radios
       conditionalConfigs.forEach(config => {
         const radios = document.querySelectorAll(`input[name="${config.name}"]`);
-        
-        if (radios.length > 0) {
-          radios.forEach(radio => {
-            radio.addEventListener('change', () => {
-              toggleConditionalQuestions(config.name, config.container);
-            });
-            
-            // También ejecutar al inicio para establecer estado inicial
-            if (radio.checked) {
-              toggleConditionalQuestions(config.name, config.container);
-            }
+        radios.forEach(radio => {
+          radio.addEventListener('change', () => {
+            toggleConditionalQuestions(config.name, config.container);
           });
-        }
+        });
       });
-
-      // Configurar listener especial para reacción adversa
+      
+      // Configurar reacción adversa específicamente
       const radiosReaccion = document.querySelectorAll('input[name="reaccion_adversa"]');
-      
-      if (radiosReaccion.length > 0) {
-        radiosReaccion.forEach(radio => {
-          radio.addEventListener('change', toggleReaccionDetale);
-          
-          // También ejecutar al inicio
-          if (radio.checked) {
-            toggleReaccionDetale();
-          }
-        });
-      }
-
-      // Inicializar estado inicial de todas las preguntas condicionales
-      conditionalConfigs.forEach(config => {
-        toggleConditionalQuestions(config.name, config.container);
+      radiosReaccion.forEach(radio => {
+        radio.addEventListener('change', toggleReaccionDetalle);
       });
-      toggleReaccionDetale(); // Inicializar reacción adversa
       
-      console.log('Preguntas condicionales inicializadas');
-    }
-
-    // --- LÓGICA DEL VIDEO Y FUNCIONALIDAD DE LA PÁGINA ---
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('DOM completamente cargado');
+      // 5. Inicializar sección mujeres
+      toggleSeccionMujeres();
       
-      const video = document.getElementById('intro-video');
-      const understoodBtn = document.getElementById('video-understood');
-      const videoMessage = document.getElementById('video-message');
-      const mainContent = document.getElementById('main-content');
-      const videoScreen = document.getElementById('video-screen');
-
-      // Lógica de reproducción del video
-      if (video && understoodBtn && videoMessage) {
-        setTimeout(() => {
-          video.play().catch(e => console.log('Autoplay bloqueado, el usuario debe iniciar manualmente'));
-        }, 2000);
-
-        video.addEventListener('ended', function() {
-          videoMessage.textContent = "¿Entendió el mensaje del video?";
-          understoodBtn.style.display = 'block';
-          understoodBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        });
-      }
-
-      // Lógica de interacción para la primera pregunta
-      const radioButtons = document.querySelectorAll('input[name="entendio_info"]');
-      const nextPageBtn = document.getElementById('next-page-btn-1');
-
-      if (radioButtons.length > 0 && nextPageBtn && videoScreen && mainContent && video) {
-        radioButtons.forEach(radio => {
-          radio.addEventListener('change', function() {
-            if (this.value === 'si') {
-              nextPageBtn.style.display = 'inline-block';
-            } else if (this.value === 'no') {
-              mainContent.style.display = 'none';
-              videoScreen.style.display = 'flex';
-              nextPageBtn.style.display = 'none';
-              
-              // Reiniciar el video
-              video.currentTime = 0;
-              video.load();
-              setTimeout(() => {
-                video.play().catch(e => console.log('Autoplay bloqueado'));
-              }, 500);
-            }
-          });
-        });
-      }
-
-      // --- LÓGICA PARA DEPARTAMENTOS Y MUNICIPIOS ---
-      const departamentoSelect = document.getElementById('departamento');
-      const municipioSelect = document.getElementById('municipio');
-
-      if (departamentoSelect && municipioSelect) {
-        // Datos de ejemplo para Colombia
-        const municipiosPorDepartamento = {
-          "Antioquia": ["Medellín", "Bello", "Itagüí", "Envigado", "Rionegro"],
-          "Cundinamarca": ["Bogotá", "Soacha", "Chía", "Zipaquirá", "Facatativá"],
-          "Valle del Cauca": ["Cali", "Palmira", "Buenaventura", "Tuluá", "Cartago"],
-          "Atlántico": ["Barranquilla", "Soledad", "Malambo", "Puerto Colombia"],
-          "Santander": ["Bucaramanga", "Floridablanca", "Girón", "Piedecuesta"],
-          "Bolívar": ["Cartagena", "Magangué", "Turbaco", "Arjona"],
-          "Nariño": ["Pasto", "Ipiales", "Tumaco", "Samaniego"],
-          "Córdoba": ["Montería", "Cereté", "Lorica", "Sahagún"],
-          "Boyacá": ["Tunja", "Duitama", "Sogamoso", "Chiquinquirá"],
-          "Meta": ["Villavicencio", "Acacías", "Granada", "San Martín"]
-        };
-
-        // Cargar todos los departamentos disponibles en el select
-        const departamentos = Object.keys(municipiosPorDepartamento);
-        
-        // Ordenar alfabéticamente los departamentos
-        departamentos.sort();
-        
-        // Agregar cada departamento al select
-        departamentos.forEach(function(departamento) {
-          const option = document.createElement('option');
-          option.value = departamento;
-          option.textContent = departamento;
-          departamentoSelect.appendChild(option);
-        });
-        
-        // Lógica para cargar municipios cuando se selecciona un departamento
-        departamentoSelect.addEventListener('change', function() {
-          const departamento = this.value;
-          const municipios = municipiosPorDepartamento[departamento] || [];
-
-          municipioSelect.innerHTML = '<option value="">Seleccione un municipio</option>';
-
-          if (municipios && municipios.length > 0) {
-            // Ordenar alfabéticamente los municipios
-            municipios.sort();
-            
-            municipios.forEach(function(municipio) {
-              const option = document.createElement('option');
-              option.value = municipio;
-              option.textContent = municipio;
-              municipioSelect.appendChild(option);
-            });
-          }
-        });
-
-        // Cargar municipios si ya hay un departamento seleccionado
-        if (departamentoSelect.value) {
-          const event = new Event('change');
-          departamentoSelect.dispatchEvent(event);
-        }
-      }
-
-      // --- LÓGICA PARA PREGUNTAS CONDICIONALES ---
-      // Inicializar todas las preguntas condicionales
-      initConditionalQuestions();
-
-      // Asegurar que solo la página 1 sea visible inicialmente
+      // 6. Configurar envío del formulario
+      document.getElementById('donantesForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Gracias por completar la encuesta. Sus respuestas han sido enviadas.');
+      });
+      
+      // 7. Mostrar primera página
       showPage(1);
       
-      // Forzar una verificación inicial de todos los estados
+      // 8. Estado inicial de preguntas condicionales
       setTimeout(() => {
-        console.log('Verificación final de estados');
-        // Verificar si hay radios ya seleccionados (por si acaso)
-        document.querySelectorAll('input[type="radio"]').forEach(radio => {
-          if (radio.checked) {
-            console.log(`Radio ${radio.name} está seleccionado con valor ${radio.value}`);
-            // Disparar el evento change manualmente
-            const event = new Event('change');
-            radio.dispatchEvent(event);
-          }
+        conditionalConfigs.forEach(config => {
+          toggleConditionalQuestions(config.name, config.container);
         });
-      }, 500);
-      toggleSeccionMujeres();
+        toggleReaccionDetalle();
+      }, 100);
     });
   </script>
 </body>
