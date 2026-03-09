@@ -543,7 +543,6 @@
           </div>
           
           <div class="navigation">
-            <button type="button" onclick="prevPage(1)">Anterior</button>
             <button type="button" onclick="nextPage()">Siguiente</button>
           </div>
         </div>
@@ -826,7 +825,6 @@
           </div>
 
           <div class="navigation">
-            <button type="button" onclick="prevPage(2)">Anterior</button>
             <button type="button" onclick="nextPage()">Siguiente</button>
           </div>
         </div> 
@@ -1329,7 +1327,6 @@
           </div>
         
           <div class="navigation">
-            <button type="button" onclick="prevPage(4)">Anterior</button>
             <button type="submit">Enviar Encuesta</button>
           </div>
         </div>
@@ -1415,8 +1412,12 @@
       } else {
         if (detallesDiv) {
           detallesDiv.classList.add('hidden');
-          detallesDiv.querySelectorAll('input').forEach(input => {
-            input.value = '';
+          detallesDiv.querySelectorAll('input, select').forEach(input => {
+            if (input.type === 'radio' || input.type === 'checkbox') {
+              input.checked = false;
+            } else {
+              input.value = '';
+            }
           });
         }
       }
