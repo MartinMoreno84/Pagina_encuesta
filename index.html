@@ -389,7 +389,7 @@
           <div class="question">
             <label>7. Género</label>
             <button type="button" class="audio-btn" onclick="leerTexto('Género')">🔊</button>
-            <select name="genero">
+            <select name="genero" required>
               <option value="">Seleccione</option>
               <option value="Masculino">Masculino</option>
               <option value="Femenino">Femenino</option>
@@ -398,7 +398,7 @@
           <div class="question">
             <label>8. Tipo de Documento</label>
             <button type="button" class="audio-btn" onclick="leerTexto('Tipo de Documento')">🔊</button>
-            <select name="tipo_documento">
+            <select name="tipo_documento" required>
               <option value="">Seleccione</option>
               <option value="Cedula de Ciudadania">CC</option>
               <option value="Cedula de Extrangería">CE</option>
@@ -416,7 +416,7 @@
           <div class="question">
             <label>10. Estado Civil</label>
             <button type="button" class="audio-btn" onclick="leerTexto('Estado civil')">🔊</button>
-            <select name="estado_civil">
+            <select name="estado_civil" required>
               <option value="">Seleccione</option>
               <option value="soltero">Soltero(a)</option>
               <option value="casado">Casado(a)</option>
@@ -427,7 +427,7 @@
           <div class="question">
             <label>11. Afiliación al sistema de Salud</label>
             <button type="button" class="audio-btn" onclick="leerTexto('Afiliación al sistema de Salud')">🔊</button>
-            <select name="afiliacion_salud">
+            <select name="afiliacion_salud" required>
               <option value="">Seleccione</option>
               <option value="No tiene">No tiene</option>
               <option value="EPS">EPS</option>
@@ -438,7 +438,7 @@
           <div class="question">
             <label>12 Grupo Sanguineo RH</label>
             <button type="button" class="audio-btn" onclick="leerTexto('Seleccione su grupo sanguineo')">🔊</button>
-            <select name="Grupo Sanguineo">
+            <select name="Grupo Sanguineo" required>
               <option value="">Seleccione</option>
               <option value="A+">A+</option>
               <option value="A-">A-</option>
@@ -455,22 +455,22 @@
           <div class="question">
             <label>13. Lugar de Donación (ciudad o municipio)</label>
             <button type="button" class="audio-btn" onclick="leerTexto('Lugar de donación, ciudad o municipio')">🔊</button>
-            <input type="text" name="lugar_donacion">
+            <input type="text" name="lugar_donacion" required>
           </div>
           <div class="question">
             <label>14. Dirección de residencia</label>
             <button type="button" class="audio-btn" onclick="leerTexto('Dirección de su residencia')">🔊</button>
-            <input type="text" name="direccion_residencia">
+            <input type="text" name="direccion_residencia" required>
           </div>
           <div class="question">
             <label>15. Barrio</label>
             <button type="button" class="audio-btn" onclick="leerTexto('Barrio')">🔊</button>
-            <input type="text" name="barrio">
+            <input type="text" name="barrio" required>
           </div>
           <div class="question">
             <label>16. Localidad</label>
             <button type="button" class="audio-btn" onclick="leerTexto('Localidad')">🔊</button>
-            <input type="text" name="localidad">
+            <input type="text" name="localidad" required>
           </div>
           <div class="question">
             <label>17. Departamento</label>
@@ -489,32 +489,32 @@
           <div class="question">
             <label>19. Teléfono Principal</label>
             <button type="button" class="audio-btn" onclick="leerTexto('Teléfono principal')">🔊</button>
-            <input type="tel" name="telefono">
+            <input type="tel" name="telefono" required>
           </div>
           <div class="question">
             <label>20. Celular</label>
             <button type="button" class="audio-btn" onclick="leerTexto('Número de celular')">🔊</button>
-            <input type="tel" name="celular">
+            <input type="tel" name="celular" required>
           </div>
           <div class="question">
             <label>21. Ocupación / Empleo</label>
             <button type="button" class="audio-btn" onclick="leerTexto('Ocupación o empleo')">🔊</button>
-            <input type="text" name="ocupacion">
+            <input type="text" name="ocupacion" required>
           </div>
           <div class="question">
             <label>22. Teléfono de Trabajo</label>
             <button type="button" class="audio-btn" onclick="leerTexto('Teléfono de su trabajo')">🔊</button>
-            <input type="tel" name="telefono_trabajo">
+            <input type="tel" name="telefono_trabajo" required>
           </div>
           <div class="question">
             <label>23. Correo Electrónico</label>
             <button type="button" class="audio-btn" onclick="leerTexto('Digite un correo electrónico')">🔊</button>
-            <input type="email" name="correo_electronico" style="font-family: 'Trebuchet MS', Arial, sans-serif;">
+            <input type="email" name="correo_electronico" style="font-family: 'Trebuchet MS', Arial, sans-serif;" required>
           </div>
           <div class="question">
             <label>24. Redes sociales</label>
             <button type="button" class="audio-btn" onclick="leerTexto('Seleccione la red social que mas usa')">🔊</button>
-            <select name="redes_sociales">
+            <select name="redes_sociales" required>
               <option value="">Seleccione</option>
               <option value="Facebook">Facebook</option>
               <option value="Instagram">Instagram</option>
@@ -529,17 +529,17 @@
           <div class="question">
             <label>25. Usuario de Red social</label>
             <button type="button" class="audio-btn" onclick="leerTexto('Cual es el usuario de la red seleccionada')">🔊</button>
-            <input type="text" name="usuario_red_social">
+            <input type="text" name="usuario_red_social" required>
           </div>
           <div class="question">
             <label>26. Nombre de un familiar y/o contacto</label>
             <button type="button" class="audio-btn" onclick="leerTexto('Nombre de algún familiar o contacto')">🔊</button>
-            <input type="text" name="familiar_contacto">
+            <input type="text" name="familiar_contacto" required>
           </div>
           <div class="question">
             <label>27. Celular de contacto</label>
             <button type="button" class="audio-btn" onclick="leerTexto('Número de celular de la persona que puso de contacto')">🔊</button>
-            <input type="tel" name="celular_contacto">
+            <input type="tel" name="celular_contacto" required>
           </div>
           
           <div class="navigation">
@@ -568,12 +568,12 @@
             <div class="conditional-questions hidden" id="donacion-detalles">
               <div class="conditional-question">
                 <label>¿Hace cuánto? (Escriba la fecha):</label>
-                <input type="date" name="fecha_ultima_donacion">
+                <input type="date" name="fecha_ultima_donacion" required>
               </div>
       
               <div class="conditional-question">
                 <label>¿En dónde donó?:</label>
-                <input type="text" name="lugar_donacion_anterior" placeholder="Ej: Clínica, Hospital, Banco de Sangre...">
+                <input type="text" name="lugar_donacion_anterior" placeholder="Ej: Clínica, Hospital, Banco de Sangre..." required>
               </div>
       
               <div class="conditional-question">
@@ -590,7 +590,7 @@
                 <!-- CORREGIDO: Este div debe estar DENTRO del conditional-question de reacción -->
                 <div id="reaccion-detalle-container" class="hidden" style="margin-top: 10px;">
                   <label>¿Qué presentó?:</label>
-                  <input type="text" name="reaccion_detalle" placeholder="Describa la reacción" style="width: 100%; padding: 8px;">
+                  <input type="text" name="reaccion_detalle" placeholder="Describa la reacción" style="width: 100%; padding: 8px;" required>
                 </div>
               </div>
             </div>
@@ -612,7 +612,7 @@
             <div class="conditional-questions hidden" id="no-apto-detalles">
               <div class="conditional-question">
                 <label>¿Por qué?:</label>
-                <input type="text" name="razon_no_apto" placeholder="Describa la razón">
+                <input type="text" name="razon_no_apto" placeholder="Describa la razón" required>
               </div>
             </div>
           </div>
@@ -673,7 +673,7 @@
             <div class="conditional-questions hidden" id="hospitalizacion-detalles">
               <div class="conditional-question">
                 <label>¿Cuál?:</label>
-                <input type="text" name="detalle_hospitalizacion" placeholder="Describa la situación">
+                <input type="text" name="detalle_hospitalizacion" placeholder="Describa la situación" required>
               </div>
             </div>
           </div>
@@ -694,7 +694,7 @@
             <div class="conditional-questions hidden" id="transfusion-detalles">
               <div class="conditional-question">
                 <label>¿Hace cuánto?:</label>
-                <input type="text" name="tiempo_transfusion" placeholder="Ej: Hace 2 años, 6 meses...">
+                <input type="text" name="tiempo_transfusion" placeholder="Ej: Hace 2 años, 6 meses..." required>
               </div>
             </div>
           </div>
@@ -715,7 +715,7 @@
             <div class="conditional-questions hidden" id="odontologia-detalles">
               <div class="conditional-question">
                 <label>¿Cuál?:</label>
-                <input type="text" name="detalle_odontologia" placeholder="Ej: Extracción, limpieza, empaste...">
+                <input type="text" name="detalle_odontologia" placeholder="Ej: Extracción, limpieza, empaste..." required>
               </div>
             </div>
           </div>
@@ -736,12 +736,12 @@
             <div class="conditional-questions hidden" id="problemas-salud-detalles">
               <div class="conditional-question">
                 <label>¿Cuál?:</label>
-                <input type="text" name="detalle_problemas_salud" placeholder="Especifique la enfermedad">
+                <input type="text" name="detalle_problemas_salud" placeholder="Especifique la enfermedad" required>
               </div>
 
               <div class="conditional-question">
                 <label>¿Sufre de alergias? ¿A qué es alérgico?:</label>
-                <input type="text" name="alergias" placeholder="Ej: Penicilina, polen, alimentos...">
+                <input type="text" name="alergias" placeholder="Ej: Penicilina, polen, alimentos..." required>
               </div>
 
               <div class="conditional-question">
@@ -767,17 +767,17 @@
             <div class="conditional-questions hidden" id="medicamentos-detalles">
               <div class="conditional-question">
                 <label>¿Cuál?:</label>
-                <input type="text" name="nombre_medicamento" placeholder="Nombre del medicamento">
+                <input type="text" name="nombre_medicamento" placeholder="Nombre del medicamento" required>
               </div>
 
               <div class="conditional-question">
                 <label>¿Para qué le fue formulado?:</label>
-                <input type="text" name="razon_medicamento" placeholder="Motivo del tratamiento">
+                <input type="text" name="razon_medicamento" placeholder="Motivo del tratamiento" required>
               </div>
 
               <div class="conditional-question">
                 <label>¿Ha padecido o padece de alguna enfermedad no mencionada anteriormente? ¿Cuál?:</label>
-                <input type="text" name="otras_enfermedades" placeholder="Otras enfermedades">
+                <input type="text" name="otras_enfermedades" placeholder="Otras enfermedades" required>
               </div>
             </div>
           </div>
@@ -819,7 +819,7 @@
             <div class="conditional-questions hidden" id="vacunacion-detalles">
               <div class="conditional-question">
                 <label>¿Qué vacuna recibió?:</label>
-                <input type="text" name="tipo_vacuna" placeholder="Ej: Influenza, COVID-19, Hepatitis...">
+                <input type="text" name="tipo_vacuna" placeholder="Ej: Influenza, COVID-19, Hepatitis..." required>
               </div>
             </div>
           </div>
@@ -941,7 +941,7 @@
             <div class="conditional-questions hidden" id="drogas-detalle">
               <div class="conditional-question">
                 <label>¿Cuál?:</label>
-                <input type="text" name="tipo_droga" placeholder="Especifique la sustancia">
+                <input type="text" name="tipo_droga" placeholder="Especifique la sustancia" required>
               </div>
             </div>
           </div>
@@ -976,7 +976,7 @@
               <!-- Subpregunta A1 -->
               <div class="conditional-question">
                 <label>¿Hace cuánto?</label>
-                <input type="text" name="tiempo_secrecion" placeholder="Ej: Hace 1 año, 6 meses...">
+                <input type="text" name="tiempo_secrecion" placeholder="Ej: Hace 1 año, 6 meses..." required>
               </div>
               
               <!-- Subpregunta A2 -->
@@ -1021,7 +1021,7 @@
               <!-- Subpregunta B1 -->
               <div class="conditional-question">
                 <label>¿Hace cuánto?</label>
-                <input type="text" name="tiempo_lesion" placeholder="Ej: Hace 2 años...">
+                <input type="text" name="tiempo_lesion" placeholder="Ej: Hace 2 años..." required>
               </div>
               
               <!-- Subpregunta B2 -->
@@ -1066,7 +1066,7 @@
               <!-- Subpregunta C1 -->
               <div class="conditional-question">
                 <label>¿Hace cuánto?</label>
-                <input type="text" name="tiempo_sifilis" placeholder="Ej: Hace 5 años...">
+                <input type="text" name="tiempo_sifilis" placeholder="Ej: Hace 5 años..." required>
               </div>
               
               <!-- Subpregunta C2 -->
@@ -1155,7 +1155,7 @@
             <div class="conditional-questions hidden" id="enfermedades-detalle">
               <div class="conditional-question">
                 <label>¿Cuál?:</label>
-                <input type="text" name="tipo_enfermedad_tropical" placeholder="Ej: Dengue, Paludismo...">
+                <input type="text" name="tipo_enfermedad_tropical" placeholder="Ej: Dengue, Paludismo..." required>
               </div>
             </div>
           </div>
@@ -1204,12 +1204,12 @@
             <div class="conditional-questions hidden" id="viajes-detalles">
               <div class="conditional-question">
                 <label>¿Dónde?</label>
-                <input type="text" name="lugar_viaje" placeholder="Ej: México, España, Otra ciudad...">
+                <input type="text" name="lugar_viaje" placeholder="Ej: México, España, Otra ciudad..." required>
               </div>
               
               <div class="conditional-question">
                 <label>¿Hace cuánto?</label>
-                <input type="text" name="tiempo_viaje" placeholder="Ej: Hace 3 años, 6 meses...">
+                <input type="text" name="tiempo_viaje" placeholder="Ej: Hace 3 años, 6 meses..." required>
               </div>
               
               <!-- Subpregunta C3 -->
@@ -1243,7 +1243,7 @@
             <div class="conditional-questions hidden" id="actividad-detalle">
               <div class="conditional-question">
                 <label>¿Qué actividad realizará después de la donación?</label>
-                <input type="text" name="actividad_post_donacion" placeholder="Ej: Descansar, Trabajar, Estudiar...">
+                <input type="text" name="actividad_post_donacion" placeholder="Ej: Descansar, Trabajar, Estudiar..." required>
               </div>
             </div>
           </div>
@@ -1320,7 +1320,7 @@
               <div class="conditional-questions hidden" id="embarazo-detalle">
                 <div class="conditional-question">
                   <label>¿Cuál?</label>
-                  <input type="text" name="detalle_embarazo" placeholder="Ej: Embarazada actualmente, Cesárea hace 6 meses...">
+                  <input type="text" name="detalle_embarazo" placeholder="Ej: Embarazada actualmente, Cesárea hace 6 meses..." required>
                 </div>
               </div>
             </div>
@@ -1384,7 +1384,23 @@
     }
 
     function nextPage() {
-      if (currentPage < totalPages) {
+      const currentPageEl = document.getElementById('page' + currentPage);
+      const inputs = currentPageEl.querySelectorAll('input, select');
+      let isValid = true;
+
+      // Forzar la validación nativa del navegador para los campos de la página actual
+      for (const input of inputs) {
+        // Solo validar si NO está en un contenedor oculto
+        if (!input.closest('.hidden')) {
+          if (!input.checkValidity()) {
+            isValid = false;
+            input.reportValidity();
+            return; // Detenerse en el primer error
+          }
+        }
+      }
+
+      if (isValid && currentPage < totalPages) {
         showPage(currentPage + 1);
       }
     }
